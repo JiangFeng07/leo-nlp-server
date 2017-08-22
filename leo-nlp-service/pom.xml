@@ -9,13 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>leo-nlp-web</artifactId>
-    <packaging>war</packaging>
+    <artifactId>leo-nlp-service</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.leo.nlp</groupId>
-            <artifactId>leo-nlp-service</artifactId>
+            <artifactId>leo-nlp-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

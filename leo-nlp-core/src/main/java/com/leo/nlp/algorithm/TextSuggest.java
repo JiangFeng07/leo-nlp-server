@@ -46,7 +46,6 @@ public class TextSuggest {
     }
 
     public static void main(String[] args) {
-        System.out.println(ternarySearchTree.toString());
         String spell = StringUtils.join(Pinyin.pinyin("毛泽冬"), "");
         for (String ele : suggest(spell)) {
             System.out.println(ele);
