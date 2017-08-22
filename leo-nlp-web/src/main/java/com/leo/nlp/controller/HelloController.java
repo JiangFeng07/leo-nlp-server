@@ -1,0 +1,15 @@
+package com.leo.nlp.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * Created by lionel on 17/8/22.
+ */
+@Controller
+public class HelloController {
+    @RequestMapping("/hello")
+    public String hello() {
+        return "hello";
+    }
+}
