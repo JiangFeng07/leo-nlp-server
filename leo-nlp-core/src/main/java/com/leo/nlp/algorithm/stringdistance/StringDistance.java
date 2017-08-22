@@ -1,4 +1,4 @@
-package com.leo.nlp.algorithm;
+package com.leo.nlp.algorithm.stringdistance;
 
 /**
  * Created by lionel on 17/8/18.

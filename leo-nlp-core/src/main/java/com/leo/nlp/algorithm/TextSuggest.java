@@ -4,13 +4,11 @@ import com.leo.nlp.structure.TernarySearchTree;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.nlpcn.commons.lang.pinyin.Pinyin;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 
 /**
  * Created by lionel on 17/8/21.
@@ -41,14 +39,23 @@ public class TextSuggest {
         }
     }
 
-    public static List<String> suggest(String text) {
-        return ternarySearchTree.suggest(text);
+    public static String suggest(String text) {
+        if (StringUtils.isBlank(text)) {
+            return null;
+        }
+        if (ternarySearchTree.search(text)) {
+            return text;
+        }
+        String suggest = TextChecker.suggest(text);
+
+        if (suggest == null) {
+            return text;
+        }
+        return suggest;
     }
 
     public static void main(String[] args) {
-        String spell = StringUtils.join(Pinyin.pinyin("毛泽冬"), "");
-        for (String ele : suggest(spell)) {
-            System.out.println(ele);
-        }
+//        System.out.println(TextSuggest.suggest("毛泽冬"));
+        System.out.println(ternarySearchTree.search("毛泽东"));
     }
 }

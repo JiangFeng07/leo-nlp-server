@@ -2,7 +2,6 @@ package com.leo.nlp.structure;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
-import org.nlpcn.commons.lang.pinyin.Pinyin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +45,7 @@ public class TernarySearchTree {
         if (StringUtils.isBlank(word)) {
             return r;
         }
-        String spell = StringUtils.join(Pinyin.pinyin(word.trim()), "");
-        char[] words = spell.toCharArray();
+        char[] words = word.toCharArray();
         if (r == null) {
             r = new TSTNode(words[ptr]);
         }

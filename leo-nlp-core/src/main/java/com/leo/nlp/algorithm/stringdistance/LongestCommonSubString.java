@@ -1,4 +1,4 @@
-package com.leo.nlp.algorithm;
+package com.leo.nlp.algorithm.stringdistance;
 
 import org.apache.commons.lang3.StringUtils;
 

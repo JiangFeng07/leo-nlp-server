@@ -1,4 +1,4 @@
-package com.leo.nlp.algorithm;
+package com.leo.nlp.algorithm.stringdistance;
 
 import java.util.Arrays;
 import java.util.Collections;
