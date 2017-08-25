@@ -9,10 +9,14 @@ import java.util.Iterator;
  * Created by lionel on 17/8/23.
  */
 public interface DGraph<V> {
-    //深度优先遍历
+    /**
+     * 深度优先遍历
+     */
     int ITERATOR_TYPE_DFS = 0;
 
-    //广度优先遍历
+    /**
+     * 广度优先遍历
+     */
     int ITERATOR_TYPE_BFS = 1;
 
     /**
