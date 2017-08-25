@@ -10,7 +10,7 @@ import java.util.*;
 @Slf4j
 public class ListDGraph<V> implements DGraph<V> {
     /**
-     * 顶点对象，其中有对应的顶点以及从以此顶点为起点的边
+     * 邻接表实现有向图
      */
     private class VE {
 

@@ -1,6 +1,5 @@
 package com.leo.nlp.structure;
 
-import com.leo.nlp.structure.TernarySearchTree;
 import org.junit.Test;
 
 /**
