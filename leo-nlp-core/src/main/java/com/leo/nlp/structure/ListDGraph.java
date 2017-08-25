@@ -235,6 +235,17 @@ public class ListDGraph<V> implements DGraph<V> {
         return res;
     }
 
+    public int count(V v) {
+        if (v == null) {
+            return 0;
+        }
+        VE ve = getVE(v);
+        if (ve == null) {
+            return 0;
+        }
+        return ve.edgeList.size();
+    }
+
     @Override
     public V remove(V v) {
 
