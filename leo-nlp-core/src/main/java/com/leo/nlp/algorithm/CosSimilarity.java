@@ -7,7 +7,9 @@ import com.leo.nlp.utils.VectorUtil;
  */
 public class CosSimilarity {
     public static double cos(long[] arrayA, long[] arrayB) {
-        if (arrayA.length <= 0 || arrayB.length <= 0 || arrayA.length != arrayB.length) {
+        if (arrayA == null || arrayA.length <= 0
+                || arrayB == null || arrayB.length <= 0
+                || arrayA.length != arrayB.length) {
             return 0.0;
         }
         if (VectorUtil.vectorNorm(arrayA) != 0 && VectorUtil.vectorNorm(arrayB) != 0) {
