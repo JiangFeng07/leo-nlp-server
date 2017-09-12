@@ -6,6 +6,13 @@ import com.leo.nlp.utils.VectorUtil;
  * Created by lionel on 17/9/12.
  */
 public class CosSimilarity {
+    /**
+     * 求文本A 和文本B 的余弦相似度
+     *
+     * @param arrayA 文本向量 A
+     * @param arrayB 文本向量 B
+     * @return 余弦相似度
+     */
     public static double cos(long[] arrayA, long[] arrayB) {
         if (arrayA == null || arrayA.length <= 0
                 || arrayB == null || arrayB.length <= 0
