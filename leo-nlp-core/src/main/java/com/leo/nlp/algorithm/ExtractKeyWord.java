@@ -29,7 +29,7 @@ public class ExtractKeyWord {
         if (StringUtils.isBlank(text)) {
             return;
         }
-        text = String.format("* * * * * %s * * * * *", text);
+        text = String.format("* * * * %s * * * *", text);
         String[] words = text.trim().split(" ");
         System.out.println(words.length);
         Set<String> set = new HashSet<String>(Arrays.asList(words));
