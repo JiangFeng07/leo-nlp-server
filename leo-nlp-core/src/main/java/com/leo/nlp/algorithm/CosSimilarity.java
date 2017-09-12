@@ -16,7 +16,6 @@ public class CosSimilarity {
         return 0.0;
     }
 
-
     public static void main(String[] args) {
         long[] arrayA = new long[]{1, 1, 2, 1, 1, 1, 0, 0, 0};
         long[] arrayB = new long[]{1, 1, 1, 0, 1, 1, 1, 1, 1};
