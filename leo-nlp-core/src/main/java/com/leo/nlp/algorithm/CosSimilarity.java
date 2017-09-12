@@ -1,4 +1,4 @@
-package com.leo.nlp.algorithm.stringdistance;
+package com.leo.nlp.algorithm;
 
 import com.leo.nlp.utils.VectorUtil;
 

@@ -47,24 +47,23 @@ public class TextPreprocessor {
      * @return 去掉停用词后返回的文本
      */
     public static String removeStopWord(String[] words) {
+        int length = words.length;
         for (int i = 0; i < words.length; i++) {
             if (stopWords.contains(words[i])) {
                 words[i] = null;
+                length -= 1;
             }
         }
 
-        List<String> list = new ArrayList<String>();
+        String[] array = new String[length];
+        int index = 0;
         for (String word : words) {
-            if (word != null) {
-                list.add(word);
+            if (word == null) {
+                continue;
             }
+            array[index] = word;
+            index += 1;
         }
-        if (list.size() <= 0) {
-            return null;
-        }
-
-        String[] array = new String[list.size()];
-        array = list.toArray(array);
 
         return StringUtils.join(array, " ");
     }
