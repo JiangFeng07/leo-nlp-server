@@ -2,7 +2,6 @@ package com.leo.nlp.text;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,7 +45,7 @@ public class TextPreprocessor {
      * @param words 文本分完词后存入数组
      * @return 去掉停用词后返回的文本
      */
-    public static String removeStopWord(String[] words) {
+    public static String[] removeStopWord(String[] words) {
         int length = words.length;
         for (int i = 0; i < words.length; i++) {
             if (stopWords.contains(words[i])) {
@@ -65,12 +64,17 @@ public class TextPreprocessor {
             index += 1;
         }
 
-        return StringUtils.join(array, " ");
+        return array;
     }
 
     public static void main(String[] args) {
         String text = "我 的 职业 是 程序猿";
         String[] fields = text.split(" ");
-        System.out.println(TextPreprocessor.removeStopWord(fields));
+        fields = TextPreprocessor.removeStopWord(fields);
+        if (fields != null) {
+            for (String ele : fields) {
+                System.out.print(ele + " ");
+            }
+        }
     }
 }

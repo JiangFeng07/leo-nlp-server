@@ -9,10 +9,19 @@ import java.util.Map;
  * Created by lionel on 17/8/18.
  */
 public class StringUtil {
+    /**
+     * 文本转化为向量
+     *
+     * @param words 文本分词后的结果
+     * @param list  文本列表
+     * @return 文本转化为向量
+     */
     public static long[] string2Vector(String[] words, List<String> list) {
         if (words == null || words.length <= 0 || list == null || list.size() <= 0) {
             return null;
         }
+
+        //计算单词频次
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (String word : words) {
             if (!map.containsKey(word)) {

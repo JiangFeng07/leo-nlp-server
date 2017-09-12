@@ -31,7 +31,7 @@ public class ExtractKeyWord {
         }
         text = String.format("* * * * %s * * * *", text);
         String[] words = text.trim().split(" ");
-        System.out.println(words.length);
+
         Set<String> set = new HashSet<String>(Arrays.asList(words));
         for (String next : set) {
             if (!next.equals("*")) {
