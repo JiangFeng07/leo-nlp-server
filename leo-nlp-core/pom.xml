@@ -52,10 +52,5 @@
             <artifactId>hanlp</artifactId>
             <version>portable-1.3.4</version>
         </dependency>
-        <dependency>
-            <groupId>org.ujmp</groupId>
-            <artifactId>ujmp-core</artifactId>
-            <version>0.3.0</version>
-        </dependency>
     </dependencies>
 </project>
