@@ -26,10 +26,12 @@ public class PageRank {
         words = TextPreprocessor.removeStopWord(words);
         int length = words.length + 2 * WINDOW_SIZE;
         String[] tmpWords = new String[length];
-        tmpWords[0] = "*";
-        tmpWords[1] = "*";
-        tmpWords[length - 1] = "*";
-        tmpWords[length - 2] = "*";
+        for (int i = 0; i < WINDOW_SIZE; i++) {
+            tmpWords[i] = "*";
+        }
+        for (int i = length - 1; i >= length - WINDOW_SIZE; i--) {
+            tmpWords[i] = "*";
+        }
         System.arraycopy(words, 0, tmpWords, WINDOW_SIZE, length - 2 * WINDOW_SIZE);
 
         Set<String> set = new HashSet<String>();
