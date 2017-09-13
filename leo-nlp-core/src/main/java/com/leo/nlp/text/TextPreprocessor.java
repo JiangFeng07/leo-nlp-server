@@ -72,7 +72,7 @@ public class TextPreprocessor {
         String[] fields = text.split(" ");
         fields = TextPreprocessor.removeStopWord(fields);
         if (fields != null) {
-            for (String ele : fields) {
+             for (String ele : fields) {
                 System.out.print(ele + " ");
             }
         }
