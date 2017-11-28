@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -18,9 +17,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.min.InternalMin;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.junit.Test;
@@ -31,7 +28,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
@@ -53,13 +49,6 @@ public class TestElasticSearch {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-    }
-
-    public static IndexResponse addIndex(Map<String, Object> map) {
-        if (map == null) {
-            return null;
-        }
-        return client.prepareIndex("twitter", "tweet").setSource(map).get();
     }
 
     @Test
@@ -89,6 +78,7 @@ public class TestElasticSearch {
                         .get();
                 i += 1;
             }
+            client.close();
 
         } catch (IOException e) {
             log.error("IO error", e);
@@ -134,9 +124,7 @@ public class TestElasticSearch {
     @Test
     public void test4() {
         AggregationBuilder aggregationBuilder = AggregationBuilders.terms("shop").field("shop_id")
-                .subAggregation(AggregationBuilders.dateHistogram("by_year")
-                        .field("dateOfBirth").dateHistogramInterval(DateHistogramInterval.YEAR)
-                        .subAggregation(AggregationBuilders.count("count").field("tag_id")));
+                .subAggregation((AggregationBuilders.count("count").field("tag_id")));
         SearchResponse sr = client.prepareSearch("reviews").addAggregation(aggregationBuilder).get();
         System.out.println(sr);
         client.close();
@@ -183,7 +171,7 @@ public class TestElasticSearch {
 
     @Test
     public void test7() {
-        TermsAggregationBuilder builder = AggregationBuilders.terms("shopAgg").field("shop_id")
+        AggregationBuilder builder = AggregationBuilders.terms("shopAgg").field("shop_id")
                 .subAggregation(AggregationBuilders.count("tagAgg").field("tag_id"));
         SearchResponse sr = client.prepareSearch("reviews").setTypes("review").addAggregation(builder).execute().actionGet();
         Terms terms = sr.getAggregations().get("shopAgg");
@@ -194,17 +182,17 @@ public class TestElasticSearch {
 
     @Test
     public void test8() {
-        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("reviews").setTypes("review")
-                .setQuery(null);
+        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("reviews").setTypes("review");
         searchRequestBuilder.addAggregation(AggregationBuilders.terms("count").field("tag_id"));
         SearchResponse searchResponse = searchRequestBuilder.execute().actionGet();
         System.out.println(searchResponse);
+        client.close();
     }
 
     @Test
     public void test9() {
-        TermsAggregationBuilder shopBuilder = AggregationBuilders.terms("shopAgg").field("shop_id");
-        TermsAggregationBuilder tagBuilder = AggregationBuilders.terms("tagAgg").field("tag");
+        AggregationBuilder shopBuilder = AggregationBuilders.terms("shopAgg").field("shop_id");
+        AggregationBuilder tagBuilder = AggregationBuilders.terms("tagAgg").field("tag");
         shopBuilder.subAggregation(tagBuilder);
         SearchResponse sr = client.prepareSearch("reviews").addAggregation(shopBuilder).execute().actionGet();
         Terms terms = sr.getAggregations().get("shopAgg");
@@ -215,5 +203,6 @@ public class TestElasticSearch {
                 System.out.println(bucket.getKey() + ":" + bucket2.getKey() + ":" + bucket2.getDocCount());
             }
         }
+        client.close();
     }
 }
