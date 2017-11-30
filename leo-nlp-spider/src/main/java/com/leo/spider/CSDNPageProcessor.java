@@ -12,8 +12,8 @@ import java.util.List;
  * Created by lionel on 17/11/29.
  */
 public class CSDNPageProcessor implements PageProcessor {
-    private static final String URL_LIST = "http://blog\\.csdn\\.net/google19890102/article/list/\\d+";
-    private static final String URL_POST = "http://blog\\.csdn\\.net/google19890102/article/details/\\d+";
+    private static final String URL_LIST = "http://blog\\.csdn\\.net/\\w+/article/list/\\d+";
+    private static final String URL_POST = "http://blog\\.csdn\\.net/\\w+/article/details/\\d+";
 
     private Site site = Site
             .me()
@@ -31,8 +31,6 @@ public class CSDNPageProcessor implements PageProcessor {
             page.addTargetRequests(urlList);
         } else {
             String baseUrl = "http://blog.csdn.net/";
-//            System.out.println(baseUrl + page.getHtml().xpath("//div[@id='article_details']//a/@href").toString());
-//            System.out.println(page.getHtml().xpath("//div[@id='article_details']//a/text()").toString());
             page.putField("title", baseUrl + page.getHtml().xpath("//div[@id=\"article_details\"]//a/@href").toString());
             page.putField("url", page.getHtml().xpath("//div[@id=\"article_details\"]//a/text()").toString());
         }
@@ -44,7 +42,14 @@ public class CSDNPageProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Spider.create(new CSDNPageProcessor()).addUrl("http://blog.csdn.net/google19890102/article/list/1").addPipeline(new FilePipeline()).thread(5).run();
+        if (args.length == 0) {
+            System.out.println("输入参数不够");
+            System.exit(0);
+        }
+
+        String cmd = args[0];
+        String url = String.format("http://blog.csdn.net/%s/article/list/1", cmd);
+        Spider.create(new CSDNPageProcessor()).addUrl(url).addPipeline(new FilePipeline()).thread(5).run();
     }
 
 }
