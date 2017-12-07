@@ -55,7 +55,7 @@ public class TextSuggest {
     }
 
     public static void main(String[] args) {
-//        System.out.println(TextSuggest.suggest("毛泽冬"));
-        System.out.println(ternarySearchTree.search("毛泽东"));
+        System.out.println(TextSuggest.suggest("毛泽东"));
+//        System.out.println(ternarySearchTree.search("毛泽东"));
     }
 }
