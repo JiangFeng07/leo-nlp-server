@@ -18,6 +18,7 @@
         <module>leo-nlp-web</module>
         <module>leo-nlp-service</module>
         <module>leo-nlp-spider</module>
+        <module>leo-nlp-dao</module>
     </modules>
     <properties>
         <env>qa</env>
