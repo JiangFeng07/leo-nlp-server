@@ -1,4 +1,4 @@
-package com.leo.spider;
+package com.leo.spider.processor;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
