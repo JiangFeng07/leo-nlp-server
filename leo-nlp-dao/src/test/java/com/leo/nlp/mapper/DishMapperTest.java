@@ -14,8 +14,8 @@ public class DishMapperTest extends AbstractTest {
 
     @Test
     public void test() {
-        Dish dish = new Dish();
-        dish.setDishName("酸菜鱼");
+        Dish dish=new Dish();
+        dish.setDishName("红烧肉");
         dish.setSource("香哈网");
         dishMapper.insert(dish);
     }

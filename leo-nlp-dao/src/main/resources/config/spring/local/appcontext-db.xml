@@ -9,7 +9,7 @@
 
     <context:annotation-config/>
     <!--扫描包进行注入-->
-    <context:component-scan base-package="com.leo.nlp.dao"/>
+    <!--<context:component-scan base-package="com.leo.nlp.dao"/>-->
 
     <!--创建数据源dataSource对象并注入到SqlSessionFactoryBean对象中-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
