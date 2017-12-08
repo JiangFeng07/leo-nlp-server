@@ -1,10 +1,8 @@
 package com.leo.spider.processor;
 
-import com.leo.spider.pipeline.XiangHaPipeline;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.util.List;
@@ -39,15 +37,5 @@ public class XiangHaPageProcessor implements PageProcessor {
     @Override
     public Site getSite() {
         return site;
-    }
-
-    public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("输入参数不够");
-            System.exit(0);
-        }
-
-        String cmd = args[0];
-        Spider.create(new XiangHaPageProcessor()).addUrl(cmd).addPipeline(new XiangHaPipeline()).run();
     }
 }
