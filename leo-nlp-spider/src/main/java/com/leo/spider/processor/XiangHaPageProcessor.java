@@ -41,14 +41,13 @@ public class XiangHaPageProcessor implements PageProcessor {
         return site;
     }
 
-//    public static void main(String[] args) {
-//        if (args.length == 0) {
-//            System.out.println("输入参数不够");
-//            System.exit(0);
-//        }
-//
-//        String cmd = args[0];
-//        Spider.create(new XiangHaPageProcessor()).addUrl(cmd).addPipeline(new XiangHaPipeline()).run();
-//    }
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("输入参数不够");
+            System.exit(0);
+        }
 
+        String cmd = args[0];
+        Spider.create(new XiangHaPageProcessor()).addUrl(cmd).addPipeline(new XiangHaPipeline()).run();
+    }
 }
