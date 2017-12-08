@@ -1,9 +1,10 @@
 package com.leo.spider.processor;
 
+import com.leo.spider.pipeline.XiangHaPipeline;
+import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.pipeline.FilePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by lionel on 17/12/7.
  */
+@Component
 public class XiangHaPageProcessor implements PageProcessor {
     private static final String URL_LIST = "https://www\\.xiangha\\.com/caipu/x-chuancai/hot-\\w+/";
     private static final String URL_CAIPIN = "https://www\\.xiangha\\.com/caipu/\\d+\\.html";
@@ -39,13 +41,14 @@ public class XiangHaPageProcessor implements PageProcessor {
         return site;
     }
 
-    public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("输入参数不够");
-            System.exit(0);
-        }
+//    public static void main(String[] args) {
+//        if (args.length == 0) {
+//            System.out.println("输入参数不够");
+//            System.exit(0);
+//        }
+//
+//        String cmd = args[0];
+//        Spider.create(new XiangHaPageProcessor()).addUrl(cmd).addPipeline(new XiangHaPipeline()).run();
+//    }
 
-        String cmd = args[0];
-        Spider.create(new XiangHaPageProcessor()).addUrl(cmd).addPipeline(new FilePipeline()).thread(5).run();
-    }
 }

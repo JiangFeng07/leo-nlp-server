@@ -10,8 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>leo-nlp-spider</artifactId>
-
-
     <dependencies>
         <dependency>
             <groupId>us.codecraft</groupId>
@@ -34,6 +32,11 @@
                     <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.leo.nlp</groupId>
+            <artifactId>leo-nlp-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <build>
