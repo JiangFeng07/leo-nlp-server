@@ -32,6 +32,8 @@ public class XiangHaProcessorTest extends AbstractTest {
     @Test
     public void test2() {
         String cmd = "https://www.xiangha.com/caipu/x-chuancai/hot-1/";
+        cmd = "https://www.xiangha.com/caipu/";
+//        cmd = "https://www.xiangha.com/caipu/84932260.html";
         Spider.create(xiangHaPageProcessor).addUrl(cmd).addPipeline(xiangHaPipeline).thread(5).run();
     }
 }
