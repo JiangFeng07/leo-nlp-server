@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
  * Created by lionel on 17/9/13.
  */
 public class TextSplit {
-    private static final String SENTENCE_DELIMITERS = "[?!;？！.。；\\r\\n]";
+    private static final String SENTENCE_DELIMITERS = "[?!;？！,，.。；\\r\\n]";
 
     public static String[] sentenceSplit(String sentence) {
         if (StringUtils.isBlank(sentence)) {
