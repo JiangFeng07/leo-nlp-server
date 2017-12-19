@@ -1,8 +1,7 @@
 package com.leo.nlp.structure;
 
+import com.leo.nlp.utils.StringUtil;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
-import org.nlpcn.commons.lang.pinyin.Pinyin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ public class TernarySearchTree {
     private TSTNode root;
 
     public void insert(String word) {
-        char[] chars = word2Pinyin(word);
+        char[] chars = StringUtil.word2Pinyin(word).toCharArray();
         root = insert(root, word, chars, 0);
     }
 
@@ -46,7 +45,7 @@ public class TernarySearchTree {
     }
 
     public List<String> search(String word) {
-        char[] chars = word2Pinyin(word);
+        char[] chars = StringUtil.word2Pinyin(word).toCharArray();
         return search(root, chars, 0);
     }
 
@@ -68,14 +67,6 @@ public class TernarySearchTree {
         } else {
             return search(node.left, chars, ptr);
         }
-    }
-
-    private char[] word2Pinyin(String word) {
-        String pinYin = StringUtils.join(Pinyin.pinyin(word), "");
-        if (StringUtils.isBlank(pinYin)) {
-            return null;
-        }
-        return pinYin.toCharArray();
     }
 
 
