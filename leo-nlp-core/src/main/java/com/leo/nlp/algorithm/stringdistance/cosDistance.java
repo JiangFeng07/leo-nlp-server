@@ -3,7 +3,6 @@ package com.leo.nlp.algorithm.stringdistance;
 import com.leo.nlp.algorithm.CosSimilarity;
 import com.leo.nlp.seg.TextSegment;
 import com.leo.nlp.utils.StringUtil;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 public class CosDistance implements StringDistance {
     @Override
     public double getDistance(String s1, String s2) {
-        if (StringUtils.isBlank(s1) || StringUtils.isBlank(s2)) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(s1) || org.apache.commons.lang3.StringUtils.isBlank(s2)) {
             return 0.0;
         }
         String[] arrayA = TextSegment.parse(s1);

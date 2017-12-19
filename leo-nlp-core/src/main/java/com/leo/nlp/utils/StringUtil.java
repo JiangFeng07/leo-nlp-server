@@ -1,14 +1,20 @@
 package com.leo.nlp.utils;
 
+import org.nlpcn.commons.lang.pinyin.Pinyin;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by lionel on 17/8/18.
  */
 public class StringUtil {
+    public static final Pattern PATTERN_ENGLISH = Pattern.compile("[a-zA-Z]+");
+
     /**
      * 文本转化为向量
      *
@@ -41,18 +47,35 @@ public class StringUtil {
         return array;
     }
 
-    public static void main(String[] args) {
-        String[] words = new String[]{"江峰", "梅西", "江峰", "足球"};
-        List<String> list = new ArrayList<String>();
-        list.add("江峰");
-        list.add("梅西");
-        list.add("罗纳尔多");
-        list.add("巴萨");
-        list.add("足球");
-        if (string2Vector(words, list) != null) {
-            for (long ele : string2Vector(words, list)) {
-                System.out.print(ele + " ");
+    public static String word2Pinyin(String word) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(word)) {
+            return "";
+        }
+        if (extract(PATTERN_ENGLISH, word).isEmpty()) {
+            return org.apache.commons.lang3.StringUtils.join(Pinyin.pinyin(word), "");
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (char ch : word.toLowerCase().toCharArray()) {
+            //是否是汉字
+            if (ch >= 0x4E00 && ch <= 0x9FA5) {
+                String pinyin = org.apache.commons.lang3.StringUtils.join(Pinyin.pinyin(String.valueOf(ch)), "");
+                sb.append(pinyin);
+            }
+            //是否为英文字母
+            if ((ch >= 0x0041 && ch <= 0x005A) || (ch >= 0x0061 && ch <= 0x007A)) {
+                sb.append(String.valueOf(ch));
             }
         }
+        return sb.toString();
+    }
+
+    public static List<String> extract(Pattern p, String str) {
+        List<String> rs = new ArrayList<String>();
+        Matcher m = p.matcher(str);
+        while (m.find()) {
+            rs.add(m.group());
+        }
+        return rs;
     }
 }
