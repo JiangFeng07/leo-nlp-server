@@ -3,7 +3,6 @@ package com.leo.nlp.algorithm;
 import com.leo.nlp.structure.TernarySearchTree;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,25 +36,5 @@ public class TextSuggest {
             IOUtils.closeQuietly(is);
             IOUtils.closeQuietly(br);
         }
-    }
-
-    public static String suggest(String text) {
-        if (StringUtils.isBlank(text)) {
-            return null;
-        }
-        if (ternarySearchTree.search(text)) {
-            return text;
-        }
-        String suggest = TextChecker.suggest(text);
-
-        if (suggest == null) {
-            return text;
-        }
-        return suggest;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(TextSuggest.suggest("毛泽东"));
-//        System.out.println(ternarySearchTree.search("毛泽东"));
     }
 }

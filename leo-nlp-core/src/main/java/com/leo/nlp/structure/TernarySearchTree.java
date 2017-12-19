@@ -2,203 +2,93 @@ package com.leo.nlp.structure;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+import org.nlpcn.commons.lang.pinyin.Pinyin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lionel on 17/8/18.
+ * Created by lionel on 17/12/18.
  */
 public class TernarySearchTree {
     private TSTNode root;
-    private ArrayList<String> al;
 
-    /**
-     * 构造函数
-     **/
-    public TernarySearchTree() {
-        root = null;
-    }
-
-    /**
-     * 判断 TernarySearchTree 是否为空
-     **/
-    public boolean isEmpty() {
-        return root == null;
-    }
-
-    /**
-     * 清空 TernarySearchTree
-     **/
-    public void makeEmpty() {
-        root = null;
-    }
-
-    /**
-     * 插入字符串
-     **/
     public void insert(String word) {
-        root = insert(root, word, 0);
+        char[] chars = word2Pinyin(word);
+        root = insert(root, word, chars, 0);
     }
 
-    private TSTNode insert(TSTNode r, String word, int ptr) {
-        if (StringUtils.isBlank(word)) {
-            return r;
+    private TSTNode insert(TSTNode node, String word, char[] chars, int ptr) {
+        if (chars == null || chars.length <= 0) {
+            return node;
         }
-        char[] words = word.toCharArray();
-        if (r == null) {
-            r = new TSTNode(words[ptr]);
+        if (node == null) {
+            node = new TSTNode(chars[ptr]);
         }
-        if (words[ptr] < r.data) {
-            r.left = insert(r.left, word, ptr);
-        } else if (words[ptr] > r.data) {
-            r.right = insert(r.right, word, ptr);
+        if (chars[ptr] < node.character) {
+            node.left = insert(node.left, word, chars, ptr);
+        } else if (chars[ptr] > node.character) {
+            node.right = insert(node.right, word, chars, ptr);
         } else {
-            if (ptr + 1 < words.length) {
-                r.middle = insert(r.middle, word, ptr + 1);
+            if (ptr + 1 < chars.length) {
+                node.middle = insert(node.middle, word, chars, ptr + 1);
             } else {
-                r.isEnd = true;
-                if (!r.words.contains(word)) {
-                    r.words.add(word);
+                if (node.words == null) {
+                    node.words = new ArrayList<String>();
+                    node.words.add(word);
+                }
+                if (!node.words.contains(word)) {
+                    node.words.add(word);
                 }
             }
         }
-        return r;
+        return node;
     }
 
-    /**
-     * 删除字符串
-     **/
-    public void delete(String word) {
-        delete(root, word.toCharArray(), 0);
+    public List<String> search(String word) {
+        char[] chars = word2Pinyin(word);
+        return search(root, chars, 0);
     }
 
-    private void delete(TSTNode r, char[] word, int ptr) {
-        if (r == null)
-            return;
-
-        if (word[ptr] < r.data) {
-            delete(r.left, word, ptr);
-        } else if (word[ptr] > r.data) {
-            delete(r.right, word, ptr);
-        } else {
-            /** to delete a word just make isEnd false **/
-            if (r.isEnd && ptr == word.length - 1) {
-                r.isEnd = false;
-            } else if (ptr + 1 < word.length) {
-                delete(r.middle, word, ptr + 1);
-            }
-        }
-    }
-
-    /**
-     * 查找字符串
-     **/
-    public boolean search(String word) {
-        return search(root, word.toCharArray(), 0);
-    }
-
-    private boolean search(TSTNode r, char[] word, int ptr) {
-        if (r == null) {
-            return false;
-        }
-
-        if (word[ptr] < r.data) {
-            return search(r.left, word, ptr);
-        } else if (word[ptr] > r.data) {
-            return search(r.right, word, ptr);
-        } else {
-            if (r.isEnd && ptr == word.length - 1) {
-                return true;
-            } else if (ptr == word.length - 1) {
-                return false;
-            } else {
-                return search(r.middle, word, ptr + 1);
-            }
-        }
-    }
-
-    /**
-     * 打印 TernarySearchTree
-     **/
-    public String toString() {
-        al = new ArrayList<String>();
-        traverse(root, "");
-        return "\nTernary Search Tree : " + al;
-    }
-
-    /**
-     * 遍历 TernarySearchTree
-     **/
-    private void traverse(TSTNode r, String str) {
-        if (r == null) {
-            return;
-        }
-
-        traverse(r.left, str);
-        str = str + r.data;
-        if (r.isEnd) {
-            al.add(str);
-        }
-        traverse(r.middle, str);
-        str = str.substring(0, str.length() - 1);
-        traverse(r.right, str);
-    }
-
-
-    /**
-     * 文本相似推荐
-     */
-    public List<String> suggest(String word) {
-        List<String> suggestWords = new ArrayList<String>();
-        if (StringUtils.isBlank(word)) {
-            return suggestWords;
-        }
-        suggestWords = suggest(root, word.toCharArray(), 0);
-        return suggestWords;
-    }
-
-    private List<String> suggest(TSTNode r, char[] word, int ptr) {
-        if (r == null) {
+    private List<String> search(TSTNode node, char[] chars, int ptr) {
+        if (chars == null || chars.length == 0) {
             return null;
         }
-        List<String> res = new ArrayList<String>();
-        if (word[ptr] < r.data) {
-            return suggest(r.left, word, ptr);
-        } else if (word[ptr] > r.data) {
-            return suggest(r.right, word, ptr);
-        } else {
-            if (r.isEnd && ptr == word.length - 1) {
-                res.addAll(r.words);
-                return res;
-            } else if (!r.isEnd && ptr == word.length - 1) {
-                return null;
-            } else {
-                return suggest(r.middle, word, ptr + 1);
-            }
+        if (ptr == chars.length) {
+            return node.getWords();
         }
+        if (node.character == chars[ptr]) {
+            if (ptr == chars.length - 1) {
+                return node.getWords();
+            } else {
+                return search(node.middle, chars, ptr + 1);
+            }
+        } else if (node.character < chars[ptr]) {
+            return search(node.right, chars, ptr);
+        } else {
+            return search(node.left, chars, ptr);
+        }
+    }
+
+    private char[] word2Pinyin(String word) {
+        String pinYin = StringUtils.join(Pinyin.pinyin(word), "");
+        if (StringUtils.isBlank(pinYin)) {
+            return null;
+        }
+        return pinYin.toCharArray();
     }
 
 
     @Data
     private class TSTNode {
-        char data;
-        boolean isEnd;
-        TSTNode left;
-        TSTNode middle;
-        TSTNode right;
-        List<String> words;
+        char character;//英文字符
+        TSTNode left;//左节点
+        TSTNode middle;//中间节点
+        TSTNode right;//右节点
+        List<String> words = null; //词语集合
 
-        /**
-         * Constructor
-         **/
-        public TSTNode(char data) {
-            this.data = data;
-            this.isEnd = false;
-            this.left = null;
-            this.middle = null;
-            this.right = null;
-            this.words = new ArrayList<String>();
+        public TSTNode(char character) {
+            this.character = character;
         }
     }
 }
