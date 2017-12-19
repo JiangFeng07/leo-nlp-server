@@ -2,6 +2,7 @@ package com.leo.nlp.structure;
 
 import com.leo.nlp.utils.StringUtil;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,29 +45,62 @@ public class TernarySearchTree {
         return node;
     }
 
-    public List<String> search(String word) {
+    public boolean search(String word) {
+        if (StringUtils.isBlank(word)) {
+            return false;
+        }
         char[] chars = StringUtil.word2Pinyin(word).toCharArray();
-        return search(root, chars, 0);
+        return search(root, word, chars, 0);
     }
 
-    private List<String> search(TSTNode node, char[] chars, int ptr) {
-        if (chars == null || chars.length == 0) {
-            return null;
-        }
-        if (ptr == chars.length) {
-            return node.getWords();
-        }
+    private boolean search(TSTNode node, String word, char[] chars, int ptr) {
         if (node.character == chars[ptr]) {
             if (ptr == chars.length - 1) {
-                return node.getWords();
+                return node.getWords() != null && node.getWords().contains(word);
             } else {
-                return search(node.middle, chars, ptr + 1);
+                return search(node.middle, word, chars, ptr + 1);
             }
         } else if (node.character < chars[ptr]) {
-            return search(node.right, chars, ptr);
+            return search(node.right, word, chars, ptr);
         } else {
-            return search(node.left, chars, ptr);
+            return search(node.left, word, chars, ptr);
         }
+    }
+
+    public List<String> suggest(String word) {
+        char[] chars = StringUtil.word2Pinyin(word).toCharArray();
+        return suggest(root, chars, 0);
+    }
+
+    private List<String> suggest(TSTNode node, char[] chars, int ptr) {
+        if (node.character == chars[ptr]) {
+            if (ptr == chars.length - 1) {
+                if (node.getWords() == null) {
+                    return findNearestWords(node);
+                } else {
+                    return node.getWords();
+                }
+            } else {
+                return suggest(node.middle, chars, ptr + 1);
+            }
+        } else if (node.character > chars[ptr]) {
+            return suggest(node.left, chars, ptr);
+        } else {
+            return suggest(node.right, chars, ptr);
+        }
+    }
+
+    private List<String> findNearestWords(TSTNode node) {
+        if (node == null) {
+            return new ArrayList<String>();
+        }
+        if (node.words != null) {
+            return node.getWords();
+        }
+        List<String> result = findNearestWords(node.left);
+        result.addAll(findNearestWords(node.right));
+        result.addAll(findNearestWords(node.middle));
+        return result;
     }
 
 

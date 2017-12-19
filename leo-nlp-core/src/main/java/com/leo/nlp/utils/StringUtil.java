@@ -1,5 +1,6 @@
 package com.leo.nlp.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.nlpcn.commons.lang.pinyin.Pinyin;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class StringUtil {
             return "";
         }
         if (extract(PATTERN_ENGLISH, word).isEmpty()) {
-            return org.apache.commons.lang3.StringUtils.join(Pinyin.pinyin(word), "");
+            return StringUtils.join(Pinyin.pinyin(word), "");
         }
 
         StringBuilder sb = new StringBuilder();

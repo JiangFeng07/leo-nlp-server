@@ -9,6 +9,6 @@ public class StringUtilsTest {
     @Test
     public void word2Pinyin() {
         System.out.println(StringUtil.word2Pinyin("江峰"));
-        System.out.println(StringUtil.word2Pinyin("江messi峰"));
+        System.out.println(StringUtil.word2Pinyin("江 峰"));
     }
 }
