@@ -4,17 +4,31 @@ import com.leo.nlp.utils.StringUtil;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by lionel on 17/12/18.
  */
 public class TernarySearchTree {
     private TSTNode root;
+    private static List<List<String>> lists = new ArrayList<>();
 
     public void insert(String word) {
-        char[] chars = StringUtil.word2Pinyin(word).toCharArray();
+        if (StringUtils.isBlank(word)) {
+            return;
+        }
+        String[] fields = word.split(":");
+        if (fields.length != 2) {
+            return;
+        }
+        char[] chars = StringUtil.word2Pinyin(fields[0]).toCharArray();
         root = insert(root, word, chars, 0);
     }
 
@@ -34,7 +48,7 @@ public class TernarySearchTree {
                 node.middle = insert(node.middle, word, chars, ptr + 1);
             } else {
                 if (node.words == null) {
-                    node.words = new ArrayList<String>();
+                    node.words = new ArrayList<>();
                     node.words.add(word);
                 }
                 if (!node.words.contains(word)) {
@@ -56,7 +70,9 @@ public class TernarySearchTree {
     private boolean search(TSTNode node, String word, char[] chars, int ptr) {
         if (node.character == chars[ptr]) {
             if (ptr == chars.length - 1) {
-                return node.getWords() != null && node.getWords().contains(word);
+                List<String> words = Optional.ofNullable(node.getWords()).orElse(null).stream().map(e -> e.split(":")[0]).collect(Collectors.toList());
+                words.stream().forEach(System.out::println);
+                return words.contains(word);
             } else {
                 return search(node.middle, word, chars, ptr + 1);
             }
@@ -96,7 +112,7 @@ public class TernarySearchTree {
 
     private List<String> findNearestWords(TSTNode node) {
         if (node == null) {
-            return new ArrayList<String>();
+            return new ArrayList<>();
         }
         if (node.getWords() != null) {
             return node.getWords();
@@ -107,8 +123,35 @@ public class TernarySearchTree {
         return result;
     }
 
+    private void traverse(TSTNode root) {
+        if (root == null) {
+            return;
+        }
+        if (root.getWords() != null && root.getWords().size() > 1) {
+            List<String> words = Optional.ofNullable(root.getWords()).orElse(null).stream().map(e -> e.split(":")[0]).collect(Collectors.toList());
+            lists.add(words);
+        }
+        traverse(root.getLeft());
+        traverse(root.getMiddle());
+        traverse(root.getRight());
+    }
+
+    public void toFile(String path) {
+        traverse(root);
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(path)));
+            for (List<String> list : lists) {
+                String line = StringUtils.join(list, ":");
+                writer.write(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Data
+
     private class TSTNode {
         char character;//英文字符
         TSTNode left;//左节点

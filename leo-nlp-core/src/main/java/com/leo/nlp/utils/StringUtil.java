@@ -49,7 +49,7 @@ public class StringUtil {
     }
 
     public static String word2Pinyin(String word) {
-        if (org.apache.commons.lang3.StringUtils.isBlank(word)) {
+        if (StringUtils.isBlank(word)) {
             return "";
         }
         if (extract(PATTERN_ENGLISH, word).isEmpty()) {
