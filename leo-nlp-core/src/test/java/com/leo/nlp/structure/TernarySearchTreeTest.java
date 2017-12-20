@@ -20,7 +20,7 @@ public class TernarySearchTreeTest {
 
     @Test
     public void test() {
-        System.out.println(ternarySearchTree.suggest("红烧鸡块"));
+        System.out.println(ternarySearchTree.suggest("红烧"));
         System.out.println(ternarySearchTree.search("红烧鸡块"));
     }
 

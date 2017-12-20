@@ -76,7 +76,11 @@ public class TernarySearchTree {
         if (node.character == chars[ptr]) {
             if (ptr == chars.length - 1) {
                 if (node.getWords() == null) {
-                    return findNearestWords(node);
+                    if (node.middle == null) {
+                        return null;
+                    } else {
+                        return findNearestWords(node.middle);
+                    }
                 } else {
                     return node.getWords();
                 }
@@ -94,7 +98,7 @@ public class TernarySearchTree {
         if (node == null) {
             return new ArrayList<String>();
         }
-        if (node.words != null) {
+        if (node.getWords() != null) {
             return node.getWords();
         }
         List<String> result = findNearestWords(node.left);
