@@ -71,7 +71,6 @@ public class TernarySearchTree {
         if (node.character == chars[ptr]) {
             if (ptr == chars.length - 1) {
                 List<String> words = Optional.ofNullable(node.getWords()).orElse(null).stream().map(e -> e.split(":")[0]).collect(Collectors.toList());
-                words.stream().forEach(System.out::println);
                 return words.contains(word);
             } else {
                 return search(node.middle, word, chars, ptr + 1);

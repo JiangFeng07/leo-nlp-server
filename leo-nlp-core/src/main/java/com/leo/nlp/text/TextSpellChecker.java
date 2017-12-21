@@ -1,6 +1,7 @@
 package com.leo.nlp.text;
 
 import com.leo.nlp.seg.TextSegment;
+import com.leo.nlp.structure.TernarySearchTree;
 import org.ansj.domain.Result;
 import org.ansj.domain.Term;
 import org.apache.commons.io.IOUtils;
@@ -20,12 +21,13 @@ import java.util.Map;
  */
 public class TextSpellChecker {
     private static Map<String, Integer> map = new HashMap<>();
-    public static Map<String, String> homonym = new HashMap<>();
+    private static Map<String, String> homonym = new HashMap<>();
     private static Map<String, Double> wordScore = new HashMap<>();
+    private static TernarySearchTree ternarySearchTree = new TernarySearchTree();
     private static int WORDS_COUNT = 0;
 
     static {
-        loadReviewFile("/tmp/review.csv");
+        loadReviewFile("/Users/lionel/Downloads/review.csv");
         loadHomonymFile("/Users/lionel/workspace_me/leo-nlp-server/leo-nlp-core/src/main/resources/correct_vocabulary.csv");
         probability();
     }

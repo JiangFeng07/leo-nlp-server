@@ -24,8 +24,8 @@ public class TernarySearchTreeTest {
     @Test
     public void test() {
 //        System.out.println(ternarySearchTree.search("红烧鸡块"));
-//        System.out.println(ternarySearchTree.search("鳗鱼盖饭"));
-        ternarySearchTree.toFile("/tmp/1.csv");
+        System.out.println(ternarySearchTree.suggest("鳗鱼盖饭"));
+//        ternarySearchTree.toFile("/tmp/1.csv");
     }
 
     private static void readFile(TernarySearchTree ternarySearchTree, String file) {
