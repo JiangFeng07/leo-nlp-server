@@ -23,7 +23,6 @@ public class TextSpellChecker {
     private static Map<String, Integer> map = new HashMap<>();
     private static Map<String, String> homonym = new HashMap<>();
     private static Map<String, Double> wordScore = new HashMap<>();
-    private static TernarySearchTree ternarySearchTree = new TernarySearchTree();
     private static int WORDS_COUNT = 0;
 
     static {
