@@ -36,8 +36,13 @@ public class TernarySearchTreeTest {
 //            br = new BufferedReader(new InputStreamReader(is));
             br = new BufferedReader(new FileReader(new File(file)));
             String line;
+            int count = 0;
             while ((line = br.readLine()) != null) {
                 ternarySearchTree.insert(line.trim());
+                count += 1;
+                if (count % 1000 == 0) {
+                    System.out.println(String.format("execute %d records!", count));
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
