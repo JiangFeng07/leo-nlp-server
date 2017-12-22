@@ -70,6 +70,10 @@
             <artifactId>ujmp-core</artifactId>
             <version>0.3.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>edu.gatech.gtri.bk-tree</groupId>
+            <artifactId>bk-tree</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>
