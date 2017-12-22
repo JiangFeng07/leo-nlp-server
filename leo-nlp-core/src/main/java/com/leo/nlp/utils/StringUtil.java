@@ -1,20 +1,27 @@
 package com.leo.nlp.utils;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.nlpcn.commons.lang.pinyin.Pinyin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Created by lionel on 17/8/18.
  */
 public class StringUtil {
     public static final Pattern PATTERN_ENGLISH = Pattern.compile("[a-zA-Z]+");
+    public static final Pattern PATTERN_JAPANESE = Pattern.compile("[\\u3040-\\u32FF]+");
+    public static final Pattern PATTERN_CHINESE = Pattern.compile("[\\u4e00-\\u9fa5]+");
+    public static final Pattern PATTERN_KOREAN = Pattern.compile("[\\uAC00-\\uD7AF]+");
+
 
     /**
      * 文本转化为向量
@@ -72,11 +79,43 @@ public class StringUtil {
     }
 
     public static List<String> extract(Pattern p, String str) {
-        List<String> rs = new ArrayList<String>();
+        List<String> rs = new ArrayList<>();
         Matcher m = p.matcher(str);
         while (m.find()) {
             rs.add(m.group());
         }
         return rs;
+    }
+
+    /**
+     * n_gram 数据预处理
+     *
+     * @param path
+     * @return
+     */
+    public static List<String> loadFile(String path) {
+        List<String> sentences = new ArrayList<>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(new File(path)));
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] files = line.trim().split("[。.?!？！]");
+                if (files.length <= 0) {
+                    continue;
+                }
+                sentences.addAll(Arrays.asList(files).stream()
+                        .map(e -> StringUtil.extract(StringUtil.PATTERN_CHINESE, e.trim()))
+                        .map(e -> StringUtils.join(e, ""))
+                        .filter(e -> e.length() >= 4)
+                        .map(e -> StringUtils.join(Arrays.asList(e.split("")), " "))
+                        .collect(Collectors.toSet()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(reader);
+        }
+        return sentences;
     }
 }
