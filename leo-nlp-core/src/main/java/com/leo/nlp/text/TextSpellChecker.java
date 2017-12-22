@@ -1,7 +1,6 @@
 package com.leo.nlp.text;
 
 import com.leo.nlp.seg.TextSegment;
-import com.leo.nlp.structure.TernarySearchTree;
 import org.ansj.domain.Result;
 import org.ansj.domain.Term;
 import org.apache.commons.io.IOUtils;
