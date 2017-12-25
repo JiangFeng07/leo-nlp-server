@@ -26,8 +26,8 @@ public class NGrams {
 
     public NGrams() {
         maxN = 0;
-        gramsetNum = new ArrayList<Integer>();
-        ngramsModel = new HashMap<String, Double[]>();
+        gramsetNum = new ArrayList<>();
+        ngramsModel = new HashMap<>();
     }
 
     // load srilm model from file
@@ -80,7 +80,7 @@ public class NGrams {
             return null;
         }
         List<String> splitedText = Arrays.asList(("<s> " + text + " </s>").split(" "));
-        List<Double> resultList = new ArrayList<Double>();
+        List<Double> resultList = new ArrayList<>();
 
         for (int i = 1; i < splitedText.size(); i++) {
             int j = i - 1;
