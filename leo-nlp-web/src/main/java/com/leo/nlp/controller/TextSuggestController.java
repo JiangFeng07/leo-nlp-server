@@ -18,6 +18,6 @@ public class TextSuggestController {
 
     @GetMapping("/suggests")
     public String suggests(@RequestParam("text") String text) {
-        return textSuggestService.suggest(text);
+        return textSuggestService.correctSuggest(text);
     }
 }

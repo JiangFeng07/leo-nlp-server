@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Service
 public class TextSuggestService {
-    public static String correctSuggest(String text) {
+    public String correctSuggest(String text) {
         Map<String, Double> finalMap = new HashMap<>();
         Map<String, Double> map = suggest(text);
         map.entrySet().stream()
@@ -42,9 +42,5 @@ public class TextSuggestService {
             map.put(candidate, NGrams.getPerplexity(candidate));
         }
         return map;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(correctSuggest("红烧扭肉"));
     }
 }
