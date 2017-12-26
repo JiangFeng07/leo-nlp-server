@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by lionel on 17/12/22.
@@ -22,7 +23,7 @@ public class BKTree {
     private static MutableBkTree<String> bkTree = null;
 
     static {
-        loadFile("/Users/lionel/Desktop/data/recommendDish/dish_name_pre3.csv");
+        loadFile("/Users/lionel/Desktop/data/recommendDish/dish.csv");
     }
 
     private static void loadFile(String path) {
@@ -54,9 +55,7 @@ public class BKTree {
         if (matches == null) {
             return suggest;
         }
-        for (Match<? extends String> match : matches) {
-            suggest.add(match.getMatch());
-        }
+        suggest.addAll(matches.stream().map(Match::getMatch).collect(Collectors.toList()));
         return suggest;
     }
 }

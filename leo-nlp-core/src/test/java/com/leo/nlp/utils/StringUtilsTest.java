@@ -31,6 +31,9 @@ public class StringUtilsTest {
         System.out.println(StringUtil.isChinese("messi"));
     }
 
+    /**
+     * 文本预处理
+     */
     @Test
     public void test() {
         try {
@@ -41,7 +44,9 @@ public class StringUtilsTest {
                 if (line.length() < 5) {
                     continue;
                 }
-                writer.write(StringUtils.join(Arrays.asList(line.split("")), " ") + "\n");
+                List<String> result = StringUtil.extract(StringUtil.PATTERN_CHINESE, line.trim());
+                String sentence = StringUtils.join(result, "");
+                writer.write(StringUtils.join(Arrays.asList(sentence.split("")), " ") + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,7 +63,7 @@ public class StringUtilsTest {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (StringUtil.isChinese(line.trim())) {
-                    writer.write(line.trim()+"\n");
+                    writer.write(line.trim() + "\n");
                 }
             }
         } catch (IOException e) {

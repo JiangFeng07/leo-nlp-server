@@ -26,7 +26,7 @@ public class TextSuggestService {
         return null;
     }
 
-    public static Map<String, Double> suggest(String text) {
+    public Map<String, Double> suggest(String text) {
         if (StringUtils.isBlank(text)) {
             return new HashMap<>();
         }
