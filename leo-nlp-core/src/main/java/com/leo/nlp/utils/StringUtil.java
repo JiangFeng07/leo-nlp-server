@@ -87,6 +87,19 @@ public class StringUtil {
         return rs;
     }
 
+    public static boolean isChinese(String word) {
+        if (StringUtils.isBlank(word)) {
+            return false;
+        }
+        for (char ch : word.toCharArray()) {
+            if (ch >= 0x4E00 && ch <= 0x9FA5) {
+                continue;
+            }
+            return false;
+        }
+        return true;
+    }
+
     /**
      * n_gram 数据预处理
      *

@@ -1,10 +1,6 @@
 package com.leo.nlp.algorithm;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by lionel on 17/12/22.
@@ -12,12 +8,7 @@ import java.util.List;
 public class NGramsTest {
     @Test
     public void test() {
-        NGrams ng = new NGrams();
-        int N = 3;
-        ng.loadModel("/Users/lionel/Desktop/srilm/LM");
-        List<Double> prob = ng.predictLogProb(StringUtils.join(Arrays.asList("红烧肉".split("")), " "), N);
-        System.out.println(prob);
-        System.out.println(ng.getPerplexity(StringUtils.join(Arrays.asList("红烧肉".split("")), " ")));
+        System.out.println(NGrams.getPerplexity("红烧肉"));
     }
 
 //    @Test

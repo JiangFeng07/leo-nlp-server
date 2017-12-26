@@ -3,6 +3,8 @@ package com.leo.nlp.utils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,25 +23,46 @@ public class StringUtilsTest {
         System.out.println(StringUtils.join(result, ""));
     }
 
+    @Test
+    public void isChinese() {
+        System.out.println(StringUtil.isChinese("梅西"));
+        System.out.println(StringUtil.isChinese("梅西,"));
+        System.out.println(StringUtil.isChinese("梅 西,"));
+        System.out.println(StringUtil.isChinese("messi"));
+    }
 
-    //    public static void main(String[] args) {
-//        List<String> sentences = loadFile("/Users/lionel/Downloads/Review.csv");
-////        sentences.stream().forEach(System.out::println);
-////        count("/Users/lionel/Downloads/review1.csv");
-//        BufferedWriter writer;
-//        try {
-//            writer = new BufferedWriter(new FileWriter(new File("/tmp/train.csv")));
-//            sentences.stream().forEach(e -> {
-//                try {
-//                    writer.write(e + "\n");
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
-//            });
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-////        map.forEach((k, v) -> System.out.println("key:value = " + k + ":" + v));
-//    }
+    @Test
+    public void test() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(new File("/Users/lionel/Downloads/Review.csv")));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("/Users/lionel/Desktop/Review.csv")));
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                if (line.length() < 5) {
+                    continue;
+                }
+                writer.write(StringUtils.join(Arrays.asList(line.split("")), " ") + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void test2() {
+        try {
+            BufferedReader reader = new BufferedReader(
+                    new FileReader(new File("/Users/lionel/Desktop/data/recommendDish/dish_name_pre.csv")));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("/Users/lionel/Desktop/data/recommendDish/dish_name_pre2.csv")));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (StringUtil.isChinese(line.trim())) {
+                    writer.write(line.trim()+"\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

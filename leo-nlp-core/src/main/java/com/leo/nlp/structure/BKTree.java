@@ -1,5 +1,6 @@
 package com.leo.nlp.structure;
 
+import com.leo.nlp.utils.StringUtil;
 import edu.gatech.gtri.bktree.BkTreeSearcher;
 import edu.gatech.gtri.bktree.BkTreeSearcher.Match;
 import edu.gatech.gtri.bktree.Metric;
@@ -21,11 +22,16 @@ public class BKTree {
     private static MutableBkTree<String> bkTree = null;
 
     static {
-        loadFile("/Users/lionel/Desktop/data/recommendDish/dish_name_pre.csv");
+        loadFile("/Users/lionel/Desktop/data/recommendDish/dish_name_pre2.csv");
     }
 
     private static void loadFile(String path) {
-        Metric<String> editDistance = StringUtils::getLevenshteinDistance;
+//        Metric<String> editDistance = StringUtils::getLevenshteinDistance;
+        Metric<String> editDistance = (x, y) -> {
+            String xPinyin = StringUtil.word2Pinyin(x);
+            String yPinyin = StringUtil.word2Pinyin(y);
+            return StringUtils.getLevenshteinDistance(xPinyin, yPinyin);
+        };
         bkTree = new MutableBkTree<>(editDistance);
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File(path)));

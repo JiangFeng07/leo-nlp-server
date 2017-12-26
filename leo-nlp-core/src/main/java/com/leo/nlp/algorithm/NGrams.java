@@ -20,18 +20,17 @@ import java.util.List;
 
 @Slf4j
 public class NGrams {
-    private int maxN;
-    private ArrayList<Integer> gramsetNum;
-    private HashMap<String, Double[]> ngramsModel;
+    private static int maxN;
+    private static ArrayList<Integer> gramsNumb = new ArrayList<>();
+    private static HashMap<String, Double[]> NGramsModel = new HashMap<>();
 
-    public NGrams() {
-        maxN = 0;
-        gramsetNum = new ArrayList<>();
-        ngramsModel = new HashMap<>();
+
+    static {
+        loadModel("/Users/lionel/Desktop/srilm/LM");
     }
 
     // load srilm model from file
-    public void loadModel(String path) {
+    private static void loadModel(String path) {
 //        InputStream is = NGrams.class.getResourceAsStream(relativePath);
         try {
 //            BufferedReader bf = new BufferedReader(new InputStreamReader(is));
@@ -48,7 +47,7 @@ public class NGrams {
                     // read ngram 1=14501 like data
                     String[] pieces = line.split("=");
                     maxN++;
-                    gramsetNum.add(NumberUtils.toInt(pieces[1]));
+                    gramsNumb.add(NumberUtils.toInt(pieces[1]));
                 }
 
                 if (line.contains("-grams:")) {
@@ -63,9 +62,9 @@ public class NGrams {
                 String[] columns = line.split("\t");
                 // with backoff value
                 if (columns.length == 3) {
-                    ngramsModel.put(columns[1], new Double[]{NumberUtils.toDouble(columns[0]), NumberUtils.toDouble(columns[2])});
+                    NGramsModel.put(columns[1], new Double[]{NumberUtils.toDouble(columns[0]), NumberUtils.toDouble(columns[2])});
                 } else if (columns.length == 2) {
-                    ngramsModel.put(columns[1], new Double[]{NumberUtils.toDouble(columns[0]), 0.0});
+                    NGramsModel.put(columns[1], new Double[]{NumberUtils.toDouble(columns[0]), 0.0});
                 }
             }
         } catch (IOException e) {
@@ -74,22 +73,22 @@ public class NGrams {
     }
 
     // get log prob for splited sentence
-    public List<Double> predictLogProb(String text, int N) {
+    public static List<Double> predictLogProb(String text, int N) {
         if (N > maxN) {
             log.error("Maximum N value is ", maxN);
             return null;
         }
-        List<String> splitedText = Arrays.asList(("<s> " + text + " </s>").split(" "));
+        List<String> spitedText = Arrays.asList(("<s> " + text + " </s>").split(" "));
         List<Double> resultList = new ArrayList<>();
 
-        for (int i = 1; i < splitedText.size(); i++) {
+        for (int i = 1; i < spitedText.size(); i++) {
             int j = i - 1;
             // 当前词的后验概率
             double currProb = 0.0;
 
             // 如果当前词是新词则直接返回当前概率0.0否则将currProb设定为1Gram下该词概率
-            if (ngramsModel.containsKey(splitedText.get(i))) {
-                currProb = ngramsModel.get(splitedText.get(i))[0];
+            if (NGramsModel.containsKey(spitedText.get(i))) {
+                currProb = NGramsModel.get(spitedText.get(i))[0];
             } else {
                 resultList.add(currProb);
                 continue;
@@ -97,14 +96,14 @@ public class NGrams {
 
             // 从2Gram开始向前回溯直到句首或NGram
             while (j >= 0 && i - j <= N - 1) {
-                Double[] tempWithoutWord = ngramsModel.get(StringUtils.join(splitedText.subList(j, i), " "));
+                Double[] tempWithoutWord = NGramsModel.get(StringUtils.join(spitedText.subList(j, i), " "));
                 // 当前回溯前缀不在模型中 没有必要继续回溯 中止
                 if (tempWithoutWord == null) {
                     break;
                 }
 
                 // 获取当前wj...wi-1 -> wi模式下的概率
-                Double[] temp = ngramsModel.get(StringUtils.join(splitedText.subList(j, i + 1), " "));
+                Double[] temp = NGramsModel.get(StringUtils.join(spitedText.subList(j, i + 1), " "));
 
                 // 模式不存在 添加wj...wi-1模式的backoff值到概率上（根据Katz Smooth应该为backoff*prob，但是因为这里srilm模型结果做了对数转化 所以直接相加即可）
                 if (temp == null) {
@@ -121,8 +120,8 @@ public class NGrams {
         return resultList;
     }
 
-    // get perplexity value from logprob list
-    private double getPerplexity(List<Double> logProbList) {
+    // get perplexity value from logProb list
+    private static double getPerplexity(List<Double> logProbList) {
         double result = 0.0;
         int nonZero = 0;
         for (double d : logProbList) {
@@ -135,8 +134,8 @@ public class NGrams {
         return result;
     }
 
-    public double getPerplexity(String text) {
-        return getPerplexity(predictLogProb(text, maxN));
+    public static double getPerplexity(String text) {
+        String word = StringUtils.join(Arrays.asList(text.split("")), " ");
+        return getPerplexity(predictLogProb(word, 3));
     }
-
 }
