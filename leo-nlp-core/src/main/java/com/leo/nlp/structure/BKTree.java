@@ -22,7 +22,7 @@ public class BKTree {
     private static MutableBkTree<String> bkTree = null;
 
     static {
-        loadFile("/Users/lionel/Desktop/data/recommendDish/dish_name_pre2.csv");
+        loadFile("/Users/lionel/Desktop/data/recommendDish/dish_name_pre3.csv");
     }
 
     private static void loadFile(String path) {
@@ -58,9 +58,5 @@ public class BKTree {
             suggest.add(match.getMatch());
         }
         return suggest;
-    }
-
-    public static void main(String[] args) {
-        search("红烧扭肉", 1).stream().forEach(System.out::println);
     }
 }
