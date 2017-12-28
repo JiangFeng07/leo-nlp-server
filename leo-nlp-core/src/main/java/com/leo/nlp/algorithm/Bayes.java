@@ -52,7 +52,7 @@ public class Bayes {
             writer = new BufferedWriter(new FileWriter(new File(modelPath)));
             writer.write(String.format("wordsize=>%d\n", wordSet.size()));
             for (Map.Entry<String, Integer> entry : topicCountMap.entrySet()) {
-                writer.write(String.format("%sProb=>%f\n", entry.getKey(), 1.0 * entry.getValue() / totalDocCount));
+                writer.write(String.format("%sProb=>%f\n", entry.getKey(), Math.log(1.0 * entry.getValue() / totalDocCount)));
             }
 
             for (Map.Entry<String, Integer> entry : wordsCountMap.entrySet()) {
@@ -62,7 +62,7 @@ public class Bayes {
                     continue;
                 }
                 String[] fields = key.split("\\|");
-                writer.write(String.format("%s=>%f\n", key, 1.0 * (wordsCountMap.get(key) + 1) / (wordsCountMap.get(fields[1]) + wordSet.size())));
+                writer.write(String.format("%s=>%f\n", key, Math.log(1.0 * (wordsCountMap.get(key) + 1) / (wordsCountMap.get(fields[1]) + wordSet.size()))));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,14 +97,14 @@ public class Bayes {
             String yesKey = String.format("%s|yes", word);
             String noKey = String.format("%s|no", word);
             if (model.containsKey(yesKey)) {
-                yesProb *= model.get(yesKey);
+                yesProb += model.get(yesKey);
             } else {
-                yesProb *= (1.0 / (model.get("yes") + model.get("wordsize")));
+                yesProb += Math.log(1.0 / (model.get("yes") + model.get("wordsize")));
             }
             if (model.containsKey(noKey)) {
-                noProb *= model.get(noKey);
+                noProb += model.get(noKey);
             } else {
-                noProb *= (1.0 / (model.get("no") + model.get("wordsize")));
+                noProb += Math.log(1.0 / (model.get("no") + model.get("wordsize")));
             }
         }
         System.out.println(String.format("类别 yes 的概率是:%f", yesProb));
