@@ -10,38 +10,4 @@ public class NGramsTest {
     public void test() {
         System.out.println(NGrams.getPerplexity("红烧肉"));
     }
-
-//    @Test
-//    public void test2() {
-//        NGrams ng = new NGrams();
-//        ng.loadModel("/Users/lionel/Desktop/srilm/LM");
-//        int N = 3;
-//        try {
-//            BufferedReader reader = new BufferedReader(new FileReader(new File("/Users/lionel/Desktop/data/recommendDish/dish.csv")));
-//            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("/tmp/1.csv")));
-//            String line = reader.readLine();
-//            while ((line = reader.readLine()) != null) {
-//                String tmp = StringUtils.join(Arrays.asList(line.split("")), " ");
-//                double ppl = ng.getPerplexity(ng.predictLogProb(tmp, N));
-//                if (ppl > 100) {
-//                    continue;
-//                }
-//                writer.write(line + "\n");
-//
-//                String[] dishes = line.trim().split("\\t");
-//                if (dishes.length != 2) {
-//                    continue;
-//                }
-//                double ppl = ng.getPerplexity(ng.predictLogProb(StringUtils.join(Arrays.asList(dishes[0].split("")), " "), N));
-//                double ppl2 = ng.getPerplexity(ng.predictLogProb(StringUtils.join(Arrays.asList(dishes[1].split("")), " "), N));
-//                if (ppl > ppl2) {
-//                    continue;
-//                }
-//                System.out.println(String.format("%s:%f <<-->> %s:%f", dishes[0], ppl, dishes[1], ppl2));
-//
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
