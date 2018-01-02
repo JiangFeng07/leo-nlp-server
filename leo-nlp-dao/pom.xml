@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>leo-nlp-dao</artifactId>
+
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -36,18 +38,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <version>4.1.6.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
+            <artifactId>spring-tx</artifactId>
+            <version>4.1.6.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

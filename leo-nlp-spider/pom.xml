@@ -12,16 +12,16 @@
     <artifactId>leo-nlp-spider</artifactId>
     <dependencies>
         <dependency>
-        <groupId>us.codecraft</groupId>
-        <artifactId>webmagic-core</artifactId>
-        <version>0.7.3</version>
-        <exclusions>
-            <exclusion>
-                <artifactId>slf4j-log4j12</artifactId>
-                <groupId>org.slf4j</groupId>
-            </exclusion>
-        </exclusions>
-    </dependency>
+            <groupId>us.codecraft</groupId>
+            <artifactId>webmagic-core</artifactId>
+            <version>0.7.3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-extension</artifactId>
