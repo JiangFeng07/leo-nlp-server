@@ -19,6 +19,7 @@
         <module>leo-nlp-service</module>
         <module>leo-nlp-spider</module>
         <module>leo-nlp-dao</module>
+        <module>leo-nlp-api</module>
     </modules>
     <properties>
         <env>qa</env>
@@ -62,6 +63,26 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.leo.nlp</groupId>
+                <artifactId>leo-nlp-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.leo.nlp</groupId>
+                <artifactId>leo-nlp-core</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.leo.nlp</groupId>
+                <artifactId>leo-nlp-dao</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.leo.nlp</groupId>
+                <artifactId>leo-nlp-service</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
                 <version>${log4j.version}</version>
@@ -96,7 +117,6 @@
                 <artifactId>commons-io</artifactId>
                 <version>2.5</version>
             </dependency>
-
             <dependency>
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>

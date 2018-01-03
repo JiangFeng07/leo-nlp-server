@@ -15,7 +15,14 @@
         <dependency>
             <groupId>com.leo.nlp</groupId>
             <artifactId>leo-nlp-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.leo.nlp</groupId>
+            <artifactId>leo-nlp-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.leo.nlp</groupId>
+            <artifactId>leo-nlp-dao</artifactId>
         </dependency>
 
         <dependency>

@@ -9,17 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>leo-nlp-web</artifactId>
-    <packaging>war</packaging>
+    <artifactId>leo-nlp-api</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.leo.nlp</groupId>
-            <artifactId>leo-nlp-service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.leo.nlp</groupId>
-            <artifactId>leo-nlp-dao</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
+
 </project>
