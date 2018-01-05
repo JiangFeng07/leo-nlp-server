@@ -17,9 +17,5 @@
             <groupId>com.leo.nlp</groupId>
             <artifactId>leo-nlp-service</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.leo.nlp</groupId>
-            <artifactId>leo-nlp-dao</artifactId>
-        </dependency>
     </dependencies>
 </project>

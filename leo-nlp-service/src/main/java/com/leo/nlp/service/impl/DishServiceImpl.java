@@ -1,6 +1,7 @@
 package com.leo.nlp.service.impl;
 
 import com.leo.nlp.api.DishService;
+import com.leo.nlp.dao.DishDao;
 import com.leo.nlp.dto.DishDTO;
 import com.leo.nlp.entity.Dish;
 import com.leo.nlp.mapper.DishMapper;
@@ -14,14 +15,14 @@ import org.springframework.stereotype.Service;
 @Service("dishService")
 public class DishServiceImpl implements DishService {
     @Autowired
-    private DishMapper dishMapper;
+    private DishDao dishDao;
 
     @Override
     public DishDTO getDishById(Integer id) {
         if (id == null || id <= 0) {
             return new DishDTO();
         }
-        Dish dish = dishMapper.selectByPrimaryKey(id);
+        Dish dish = dishDao.selectByPrimaryKey(id);
         return convert(dish);
     }
 

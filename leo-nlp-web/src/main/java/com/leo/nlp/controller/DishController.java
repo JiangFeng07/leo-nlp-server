@@ -1,7 +1,7 @@
 package com.leo.nlp.controller;
 
-import com.leo.nlp.dao.DishDao;
-import com.leo.nlp.entity.Dish;
+import com.leo.nlp.api.DishService;
+import com.leo.nlp.dto.DishDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/dishes")
 public class DishController {
     @Autowired
-    private DishDao dishDao;
+    private DishService dishService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Dish show(@PathVariable("id") Integer id) {
-        return dishDao.selectByPrimaryKey(id);
+    public DishDTO show(@PathVariable("id") Integer id) {
+        return dishService.getDishById(id);
     }
 }
