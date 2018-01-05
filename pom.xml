@@ -15,7 +15,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>leo-nlp-core</module>
-        <module>leo-nlp-web</module>
         <module>leo-nlp-service</module>
         <module>leo-nlp-spider</module>
         <module>leo-nlp-dao</module>
