@@ -15,6 +15,7 @@
         <module>leo-nlp-spider</module>
         <module>leo-nlp-dao</module>
         <module>leo-nlp-api</module>
+        <module>leo-nlp-web</module>
     </modules>
     <properties>
         <env>qa</env>
@@ -145,6 +146,16 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-jdbc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
         </dependencies>
