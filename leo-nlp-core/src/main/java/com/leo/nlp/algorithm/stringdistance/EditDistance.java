@@ -11,7 +11,7 @@ public class EditDistance implements StringDistance {
         return 1.0 * getEditDistance(s1, s2) / Math.min(s1.length(), s2.length());
     }
 
-    private int getEditDistance(String s1, String s2) {
+    public static int getEditDistance(String s1, String s2) {
         if (s1 == null || s2 == null) {
             return 0;
         }
@@ -39,5 +39,9 @@ public class EditDistance implements StringDistance {
         }
 
         return dist[lengthA][lengthB];
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getEditDistance("eat", "cat"));
     }
 }
