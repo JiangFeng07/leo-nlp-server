@@ -18,7 +18,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.leo.nlp.seg.TextSegment</mainClass>
+                            <mainClass>com.leo.nlp.utils.Fan2Jian</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -49,6 +49,11 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <version>1.7.22</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.22</version>
         </dependency>
         <dependency>
