@@ -3,6 +3,7 @@ package com.leo.nlp.seg;
 import lombok.extern.slf4j.Slf4j;
 import org.ansj.domain.Result;
 import org.ansj.domain.Term;
+import org.ansj.library.AmbiguityLibrary;
 import org.ansj.recognition.impl.StopRecognition;
 import org.ansj.splitWord.analysis.DicAnalysis;
 import org.ansj.splitWord.analysis.ToAnalysis;
@@ -14,6 +15,8 @@ import org.nlpcn.commons.lang.tire.library.Library;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by lionel on 17/9/12.
@@ -32,13 +35,13 @@ public class TextSegment {
 
 
     static {
-        makeForest(forest, "/Users/lionel/Desktop/data/recommendDish/dishname.csv", "dish");
+        AmbiguityLibrary.put(AmbiguityLibrary.DEFAULT, AmbiguityLibrary.DEFAULT, new Forest());
+        makeForest(forest, "/Users/lionel/Downloads/dish.txt", "dish");
         stopNull.insertStopNatures("null");
         stopNull.insertStopNatures("w");
         loadStopWord(stopWord, "/stop_word.dic");
         dishAnalysis.setForests(forest);
     }
-
 
     private static void loadStopWord(StopRecognition stopRecognition, String dic) {
         log.info(String.format("Load %s to %s", dic, stopRecognition));
@@ -99,5 +102,36 @@ public class TextSegment {
             words[i] = name;
         }
         return words;
+    }
+
+    public static void main(String[] args) {
+        if (args.length < 2) {
+            System.exit(1);
+        }
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
+        try {
+            reader = new BufferedReader(new FileReader(new File(args[0])));
+            writer = new BufferedWriter(new FileWriter(new File(args[1])));
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.trim().split("\\t");
+                if (fields.length != 2) {
+                    continue;
+                }
+                Result result = TextSegment.parseForDishName(fields[1]);
+                List<String> words = result.getTerms().stream()
+                        .filter(e -> !e.getNatureStr().equals("null"))
+                        .filter(e -> !e.getNatureStr().startsWith("w"))
+                        .filter(e -> !e.getNatureStr().startsWith("t"))
+                        .map(Term::getName).collect(Collectors.toList());
+                writer.write(String.format("%s %s\n", fields[0], StringUtils.join(words, ",")));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(reader);
+            IOUtils.closeQuietly(writer);
+        }
     }
 }
