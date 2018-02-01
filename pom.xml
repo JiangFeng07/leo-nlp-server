@@ -16,6 +16,7 @@
         <module>leo-nlp-dao</module>
         <module>leo-nlp-api</module>
         <module>leo-nlp-web</module>
+        <module>leo-nlp-job</module>
     </modules>
     <properties>
         <env>qa</env>
