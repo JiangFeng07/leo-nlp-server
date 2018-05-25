@@ -2,12 +2,10 @@ package com.leo.nlp.utils;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.nlpcn.commons.lang.pinyin.Pinyin;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -100,6 +98,31 @@ public class StringUtil {
         return true;
     }
 
+    @Test
+    public void test() {
+        try {
+            BufferedReader reader = new BufferedReader(new BufferedReader(new FileReader("/tmp/2.csv")));
+            BufferedWriter writer = new BufferedWriter(new BufferedWriter(new FileWriter("/tmp/22.csv")));
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.trim().split("\t");
+                if (fields.length != 2) {
+                    continue;
+                }
+                StringBuffer sb = new StringBuffer();
+                for (char ch : fields[1].toCharArray()) {
+                    if (isChinese(String.valueOf(ch))) {
+                        sb.append(String.valueOf(ch));
+                    }
+                }
+                writer.write(String.format("%s %s", fields[0], sb.toString()) + "\n");
+            }
+            writer.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * n_gram 数据预处理
      *
@@ -130,5 +153,24 @@ public class StringUtil {
             IOUtils.closeQuietly(reader);
         }
         return sentences;
+    }
+
+    public static int maxSubString(String[] array) {
+        if (array == null || array.length <= 0) {
+            return 0;
+        }
+        int res = 1;
+        int cur = 1;
+        for (int i = 1; i < array.length; i++) {
+            if (array[i].equals(array[i - 1])) {
+                cur += 1;
+            } else {
+                if (cur > res) {
+                    res = cur;
+                }
+                cur = 1;
+            }
+        }
+        return Math.max(res, cur);
     }
 }

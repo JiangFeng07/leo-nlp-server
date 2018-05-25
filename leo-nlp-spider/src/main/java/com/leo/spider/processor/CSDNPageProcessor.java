@@ -14,7 +14,6 @@ import java.util.List;
 public class CSDNPageProcessor implements PageProcessor {
     private static final String URL_LIST = "http://blog\\.csdn\\.net/\\w+/article/list/\\d+";
     private static final String URL_POST = "http://blog\\.csdn\\.net/\\w+/article/details/\\d+";
-
     private Site site = Site
             .me()
             .setDomain("blog.sina.com.cn")

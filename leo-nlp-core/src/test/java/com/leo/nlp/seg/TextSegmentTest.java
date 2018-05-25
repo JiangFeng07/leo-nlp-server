@@ -23,7 +23,7 @@ public class TextSegmentTest {
 
     @Test
     public void test() {
-        String text = "我有一个可爱的儿子";
+        String text = "故乡是温暖的,它让人舒适;故乡是温馨的,它让人憧憬;故乡是快乐的,它让人怀念";
         System.out.println(ToAnalysis.parse(text));
     }
 
@@ -54,5 +54,11 @@ public class TextSegmentTest {
             IOUtils.closeQuietly(reader);
             IOUtils.closeQuietly(writer);
         }
+    }
+
+    @Test
+    public void test3() {
+        String text = "黄金甲颜色富贵的华丽，粉碎成齿间分离的清脆，流淌出甜蜜香浓的妩媚，缠绕心情坠入无忧无虑的谷底，为此沉迷不醒万劫不复亦在所不惜......";
+        System.out.println(ToAnalysis.parse(text));
     }
 }
