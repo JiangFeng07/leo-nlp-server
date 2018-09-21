@@ -14,9 +14,9 @@
     <!--创建数据源dataSource对象并注入到SqlSessionFactoryBean对象中-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/Content"/>
-        <property name="username" value="fengj"/>
-        <property name="password" value="gogg897@!"/>
+        <property name="url" value="***"/>
+        <property name="username" value="***"/>
+        <property name="password" value="****"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
